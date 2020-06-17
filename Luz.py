@@ -16,13 +16,20 @@ class Luz:
 	def goHome(self):
 		self.rayo.up()
 		self.rayo.setpos(self.x, self.y)
-		self.rayo.setheading(360)
+		#self.rayo.setheading(360)
 		self.rayo.down()
 
 	def rotar(self, grados):
 		self.rayo.up()
-		self.rayo.left(grados)
+		self.rayo.setheading(grados)
 		self.rayo.down()
 
-	def go(self):
-		self.rayo.forward(100)
+	def go(self, color):
+		self.rayo.pencolor(color)
+		self.rayo.forward(1)
+
+	def getX(self):
+		return self.rayo.xcor()+250
+
+	def getY(self):
+		return self.rayo.ycor()+250
