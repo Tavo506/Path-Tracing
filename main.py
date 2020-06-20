@@ -62,6 +62,7 @@ def pathtracing(Rayo, direcciones):
         while(dir in direcciones):  #Si el ángulo ya se usó selecciona otro
             dir = random.randint(1, 360)
 
+
         direcciones.append(dir) #Agrega el ángulo a la lista
 
         Rayo.rotar(dir) #Rota el rayo a la dirección
@@ -88,13 +89,13 @@ def pathtracing(Rayo, direcciones):
             if(color[0] in ["#d7d4cf", "#812b2b", "#6d6d6d"]): #Si el color es un muro:
                 if(Rayo.puedeRebotar()):
                     Rayo.setRebote(False)
-                    #orientacion = calcularDireccion(x, y)
-                    #print(Rayo.getDir(), orientacion)
-                    #Rayo.cambioDireccion(orientacion, dir)
-                    #Rayo.go(color)  #Se mueve uno y pinta
+                    orientacion = calcularDireccion(x, y)
+                    print(dir, orientacion)
+                    Rayo.cambioDireccion(orientacion, dir)
+                    Rayo.go(color[1])  #Se mueve uno y pinta
                 else:
                     break
-
+        break
         if(veces % 4 == 0):
             update()
         
@@ -125,6 +126,7 @@ t1 = threading.Thread(target = pathtracing, args=(Rayo1,direcciones1,)) # f bein
 t1.setDaemon(True) # Alternatively, you can use "t.daemon = True"
 t1.start()
 
+"""
 t2 = threading.Thread(target = pathtracing, args=(Rayo2,direcciones1,)) # f being the function that tells how the ball should move
 t2.setDaemon(True) # Alternatively, you can use "t.daemon = True"
 t2.start()
@@ -136,6 +138,6 @@ t3.start()
 t4 = threading.Thread(target = pathtracing, args=(Rayo4,direcciones2,)) # f being the function that tells how the ball should move
 t4.setDaemon(True) # Alternatively, you can use "t.daemon = True"
 t4.start()
-
+"""
 
 done()
