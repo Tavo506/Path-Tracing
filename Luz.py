@@ -13,6 +13,7 @@ class Luz:
 		self.rayo = Turtle()
 		self.rayo.ht()
 		self.rayo.speed(0)
+		
 
 	def goHome(self):
 		self.rayo.up()
@@ -35,10 +36,19 @@ class Luz:
 	def getY(self):
 		return self.rayo.ycor()
 
+	def getDir(self):
+		return self.rayo.heading()
+
 	def puedeRebotar(self):
 		return self.primerRebote
 
 	def setRebote(self, estado):
 		self.primerRebote = estado
 
-	#def cambioDireccion(self):
+	def cambioDireccion(self, orientacion, dir):
+		if(orientacion == 1):	#vertical
+			return
+		else:					#horizontal
+			if(90 > dir > 0):
+				angulo = (90 - dir)*2 + 180
+				self.rotar(angulo)

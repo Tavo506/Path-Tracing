@@ -5,15 +5,46 @@ from PIL import Image
 from Luz import *
 import threading
 
-def getColor(x, y):
-    color = px[int(x),int(y)]
-    color = "#" + str(hex(color[0]).split('x')[-1]) + str(hex(color[1]).split('x')[-1]) + str(hex(color[2]).split('x')[-1])
-    return color
+def getColor(x, y, i):
+    i = i // 2
+
+    colorRGB = px[int(x),int(y)]
+
+    R = colorRGB[0]
+    G = colorRGB[1]
+    B = colorRGB[2]
+
+    colorH = "#" + str(hex(R).split('x')[-1]) + str(hex(G).split('x')[-1]) + str(hex(B).split('x')[-1])
+
+    if(R - i >= 16):
+        R = hex(R - i).split('x')[-1]
+    elif(R - i >= 0):
+        R = "0" + hex(R - i).split('x')[-1]
+    else:
+        R = "00"
+
+    if(G - i >= 16):
+         G = hex(G - i).split('x')[-1]
+    elif(G - i >= 0):
+        G = "0" + hex(G - i).split('x')[-1]
+    else:
+        G = "00"
+
+    if(B - i >= 16):
+        B = hex(B - i).split('x')[-1]
+    elif(B - i >= 0):
+        B = "0" + hex(B - i).split('x')[-1]
+    else:
+        B = "00"
+
+    colorRGB = "#" + R + G + B
+
+    return [colorH, colorRGB]
 
 
 def calcularDireccion(x, y):
-    color = getColor(x, y+4)
-    if(color in ["#d7d4cf", "#812b2b", "#6d6d6d"]):
+    color = getColor(x, y+4, 0)
+    if(color[0] in ["#d7d4cf", "#812b2b", "#6d6d6d"]):
         return 1    #vertical
     else:
         return 2    #horizontal
@@ -35,7 +66,7 @@ def pathtracing(Rayo, direcciones):
 
         Rayo.rotar(dir) #Rota el rayo a la dirección
 
-        for i in range(200):    #"i" es el alcance
+        for i in range(255):    #"i" es el alcance
 
             #Recupera las coordenadas actuales
             x = Rayo.getX()
@@ -44,16 +75,29 @@ def pathtracing(Rayo, direcciones):
             if(500 < x or x < 0 or 500 < y or y < 0):   #Si se sale de la pantalla se detiene
                 break
 
-            color = getColor(x, y)  #Obtiene el color en las coordenadas actuales para pintar
-            Rayo.go(color)  #Se mueve uno y pinta
+            try:
+                color = getColor(x, y, i)  #Obtiene el color en las coordenadas actuales para pintar
+            except:
+                continue
 
-            if(color in ["#d7d4cf", "#812b2b", "#6d6d6d"]): #Si el color es un muro:
+            if(color[1] == "#000000"):
+                break
+
+            Rayo.go(color[1])  #Se mueve uno y pinta
+
+            if(color[0] in ["#d7d4cf", "#812b2b", "#6d6d6d"]): #Si el color es un muro:
                 if(Rayo.puedeRebotar()):
                     Rayo.setRebote(False)
-                    Rayo.cambioDireccion(calcularDireccion(x, y), dir)
+                    #orientacion = calcularDireccion(x, y)
+                    #print(Rayo.getDir(), orientacion)
+                    #Rayo.cambioDireccion(orientacion, dir)
+                    #Rayo.go(color)  #Se mueve uno y pinta
                 else:
                     break
 
+        if(veces % 4 == 0):
+            update()
+        
 
 #print("#" + str(hex(109).split('x')[-1]) + str(hex(109).split('x')[-1]) + str(hex(109).split('x')[-1]))
 
@@ -67,6 +111,7 @@ title("Path Tracing 4K")
 setup(500, 500)
 bgcolor(0,0,0)
 setworldcoordinates(0, 500, 500, 0)
+tracer(0, 0)
 
 Rayo1 = Luz(180, 305)
 Rayo2 = Luz(180, 305)
