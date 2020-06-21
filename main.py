@@ -89,7 +89,7 @@ def pathtracing(Rayo, direcciones, rl, gl, bl):
             try:
                 color = getColor(x, y, i, ri, gi, bi)  #Obtiene el color en las coordenadas actuales para pintar
             except:
-                print("Se muriooooo")
+                update()
 
             if(color[1] == "#000000"):
                 break
@@ -123,8 +123,7 @@ def pathtracing(Rayo, direcciones, rl, gl, bl):
                 else:
                     break
 
-        if(dir % 10 == 0):
-            update()
+
         
 
 #print("#" + str(hex(109).split('x')[-1]) + str(hex(109).split('x')[-1]) + str(hex(109).split('x')[-1]))
@@ -146,7 +145,7 @@ title("Path Tracing 4K")
 setup(500, 500)
 bgcolor(0,0,0)
 setworldcoordinates(0, 500, 500, 0)
-tracer(0,0)
+tracer(False)
 
 Rayo1 = Luz(180, 305)
 Rayo2 = Luz(180, 305)
@@ -186,7 +185,7 @@ t6 = threading.Thread(target = pathtracing, args=(Rayo6,direcciones4,5,5,-5,)) #
 t6.setDaemon(True) # Alternatively, you can use "t.daemon = True"
 t6.start()
 
-t7 = threading.Thread(target = pathtracing, args=(Rayo7,direcciones5,0,-5,-5,)) # f being the function that tells how the ball should move
+t7 = threading.Thread(target = pathtracing, args=(Rayo7,direcciones5,0,-10,-10,)) # f being the function that tells how the ball should move
 t7.setDaemon(True) # Alternatively, you can use "t.daemon = True"
 t7.start()
 
