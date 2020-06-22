@@ -2,6 +2,7 @@ from turtle import *
 
 class Luz:
 
+	color = "#3F3F3F"
 	rayo = ""
 	x = 0.0
 	y = 0.0
@@ -14,6 +15,7 @@ class Luz:
 		self.rayo.ht()
 		self.rayo.speed(0)
 		self.rayo.pensize(2)
+		self.rayo.setundobuffer(None)
 
 	def goHome(self):
 		self.rayo.up()
@@ -28,6 +30,9 @@ class Luz:
 
 	def go(self, color):
 		self.rayo.pencolor(color)
+		self.rayo.forward(1)
+
+	def gof(self):
 		self.rayo.forward(1)
 
 	def getX(self):

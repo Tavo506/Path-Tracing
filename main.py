@@ -57,7 +57,7 @@ def calcularDireccion(x, y):
 
 def pathtracing(Rayo, direcciones, rl, gl, bl):
     
-    for veces in range(360):
+    for veces in range(100):
 
         Rayo.goHome()   #Va al origen
 
@@ -67,7 +67,7 @@ def pathtracing(Rayo, direcciones, rl, gl, bl):
             dir = random.choice(direcciones) #Obtiene un ángulo
             direcciones.pop(direcciones.index(dir)) #Elimina el ángulo de la lista
         except:
-            break
+            return
 
         Rayo.rotar(dir) #Rota el rayo a la dirección
         color = ["",""]
@@ -145,7 +145,7 @@ title("Path Tracing 4K")
 setup(500, 500)
 bgcolor(0,0,0)
 setworldcoordinates(0, 500, 500, 0)
-tracer(False)
+tracer(0,10000)
 
 Rayo1 = Luz(180, 305)
 Rayo2 = Luz(180, 305)
