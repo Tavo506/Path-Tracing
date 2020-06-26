@@ -109,6 +109,10 @@ def pathtracing(Rayo, direcciones, rl, gl, bl):
                 ri = 20
                 gi = -10
                 bi = -10
+            elif(color[0]=="#5ad6d0"):
+            	ri=-10
+            	gi=-10
+            	bi=20
 
             elif(color[0] in ["#812b2b", ""] ):
                 if(Rayo.puedeRebotar()):
@@ -137,6 +141,7 @@ direcciones2 = direcciones[:]
 direcciones3 = direcciones[:]
 direcciones4 = direcciones[:]
 direcciones5 = direcciones[:]
+direcciones6 = direcciones[:]
 
 im_file = Image.open("fondo.png")
 px = im_file.load()
@@ -158,6 +163,8 @@ Rayo5 = Luz(448, 51)
 Rayo6 = Luz(448, 51)
 
 Rayo7 = Luz(42, 429)
+
+Rayo8 = Luz(153,154)
 
 #thread setup
 t1 = threading.Thread(target = pathtracing, args=(Rayo1,direcciones1,5,5,-5,)) # f being the function that tells how the ball should move
@@ -188,5 +195,9 @@ t6.start()
 t7 = threading.Thread(target = pathtracing, args=(Rayo7,direcciones5,0,-10,-10,)) # f being the function that tells how the ball should move
 t7.setDaemon(True) # Alternatively, you can use "t.daemon = True"
 t7.start()
+
+t8 = threading.Thread(target = pathtracing, args=(Rayo8,direcciones6,5,5,-5,)) # f being the function that tells how the ball should move
+t8.setDaemon(True) # Alternatively, you can use "t.daemon = True"
+t8.start()
 
 done()
